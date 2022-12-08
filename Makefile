@@ -14,6 +14,7 @@
 # This is where you want to put the name of your program or library that you will be compiling
 
 NAME	= pipex
+BONUS_NAME	= pipex_bonus
 
 ### DIR ###
 # all the dir to neatly keep your .c and .h
@@ -39,7 +40,7 @@ TESTER4		=
 
 SRC	=	pipex.c
 
-BONUS	=	
+BONUS	=	pipex_bonus.c
 
 SHARE	=
 
@@ -119,19 +120,22 @@ re:	fclean all
 FILE1	= infile
 FILE2	= outfile
 COM1	= "wc -w"
-COM2	= "cat"
+COM2	= "wc -m"
+COM3 	=  "cat" "sort" "cat /dev/random" "ls" "wc"
 
 t1:	
 	./pipex ${FILE1} ${COM1} ${COM2} ${FILE2}
 t2:	
 	< ${FILE1} ${COM1} | ${COM2} > ${FILE2}
 
-test2:	re
+test2:
+	./pipex_bonus ${FILE1} ${COM3} ${FILE2}
 #< infile CCwc -w | grep outfile
 
 mem:		
 #./pipex ${FILE1} ${COM1} ${COM2} ${FILE2}
-	valgrind -s --leak-check=full ./pipex ${FILE1} ${COM1} ${COM2} ${FILE2}
+	valgrind -s --leak-check=full ./pipex_bonus ${FILE1} ${COM3} ${FILE2}
+#./pipex ${FILE1} ${COM1} ${COM2} ${FILE2}
 
 tester:
 	@echo "$(YELLOW)Testers are not perfect but its good enough$(NOC)"
